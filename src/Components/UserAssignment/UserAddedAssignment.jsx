@@ -30,7 +30,7 @@ const UserAddedAssignment = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:3000/assignmentscount')
+        fetch('online-group-study-serverside-francisms-projects.vercel.app/assignmentscount')
         .then(res => res.json())
         .then(count => setCount(count))
         .catch(error => console.log(error))
@@ -55,7 +55,7 @@ const UserAddedAssignment = () => {
         })
             .then(res => {
                 if (res.isConfirmed) {
-                    fetch(`http://localhost:3000/assignments/${id}`, {
+                    fetch(`online-group-study-serverside-francisms-projects.vercel.app/assignments/${id}`, {
                         method: 'DELETE'
                     })
                         .then(res => res.json())
@@ -75,7 +75,7 @@ const UserAddedAssignment = () => {
 
 
     const handleBookingConfirm = (id) => {
-        fetch(`http://localhost:3000/assignments/${id}`, {
+        fetch(`online-group-study-serverside-francisms-projects.vercel.app/assignments/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'

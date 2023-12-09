@@ -31,7 +31,7 @@ const AssignmentDetails = () => {
 
         const updatemarks = {userMarks}
 
-        const baseUrl = `http://localhost:3000/homeassignments`;
+        const baseUrl = `online-group-study-serverside-francisms-projects.vercel.app/homeassignments`;
         const url = `${baseUrl}${_id ? '/' + _id : ''}`;
 
         fetch(url, {

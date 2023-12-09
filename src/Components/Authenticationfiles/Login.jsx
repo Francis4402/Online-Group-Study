@@ -30,7 +30,7 @@ const Login = () => {
                 const loggedInUser = res.user;
                 console.log(loggedInUser)
                 const user = {email};
-                axios.post('http://localhost:3000/jwt', user, {withCredentials: true})
+                axios.post('online-group-study-serverside-francisms-projects.vercel.app/jwt', user, {withCredentials: true})
                     .then(res => {
                         if(res.data.success) {
                             navigate(location?.state ? location?.state : '/')
@@ -47,7 +47,7 @@ const Login = () => {
     const handlegooglesignin = () => {
         signinwithGoogle()
             .then(() => {
-                axios.post('http://localhost:3000/jwt', user, {withCredentials: true})
+                axios.post('online-group-study-serverside-francisms-projects.vercel.app/jwt', user, {withCredentials: true})
                     .then(res => {
                         if(res.data.success){
                             navigate(location?.state ? location?.state : '/')

@@ -52,12 +52,12 @@ const router = createBrowserRouter([
             {
                 path: '/assignmentdetails/:homeassignments/:id',
                 element: <PrivateRoute><AssignmentDetails/></PrivateRoute>,
-                loader: async ({params}) => await fetch(`http://localhost:3000/${params.homeassignments}/${params.id}`)
+                loader: async ({params}) => await fetch(`online-group-study-serverside-francisms-projects.vercel.app/${params.homeassignments}/${params.id}`)
             },
             {
                 path: '/updateassignment/:assignments/:id',
                 element: <UpdateAssignment/>,
-                loader: async  ({params}) => await fetch(`http://localhost:3000/${params.assignments}/${params.id}`)
+                loader: async  ({params}) => await fetch(`online-group-study-serverside-francisms-projects.vercel.app/${params.assignments}/${params.id}`)
             },
             {
                 path: '/useraddedassignment',

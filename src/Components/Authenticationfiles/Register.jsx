@@ -30,7 +30,7 @@ const Register = () => {
                 const RegisterUser = res.user;
                 console.log(RegisterUser)
                 const user = {name, email};
-                axios.post('http://localhost:3000/jwt', user, {withCredentials: true})
+                axios.post('online-group-study-serverside-francisms-projects.vercel.app/jwt', user, {withCredentials: true})
                     .then(res => {
                         if(res.data.success){
                             navigate(location?.state ? location?.state : '/')
@@ -47,7 +47,7 @@ const Register = () => {
     const handlegooglesignin = () => {
         signinwithGoogle()
             .then(() => {
-                axios.post('http://localhost:3000/jwt', user, {withCredentials: true})
+                axios.post('online-group-study-serverside-francisms-projects.vercel.app/jwt', user, {withCredentials: true})
                     .then(res => {
                         if(res.data.success){
                             navigate(location?.state ? location?.state : '/')
