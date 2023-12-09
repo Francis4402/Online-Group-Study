@@ -23,7 +23,7 @@ const AddAssignment = () => {
 
         const AddAssignment = {title, email, userMarks, thumbnail, description, marks, date, level}
 
-        fetch('online-group-study-serverside-francisms-projects.vercel.app/assignments', {
+        fetch('https://online-group-study-serverside-francisms-projects.vercel.app/assignments', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
@@ -44,7 +44,7 @@ const AddAssignment = () => {
             .catch(error => console.error(error))
 
 
-        fetch('online-group-study-serverside-francisms-projects.vercel.app/homeassignments', {
+        fetch('https://online-group-study-serverside-francisms-projects.vercel.app/homeassignments', {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'

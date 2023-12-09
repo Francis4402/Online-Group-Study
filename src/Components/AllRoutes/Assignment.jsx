@@ -23,7 +23,7 @@ const Assignment = () => {
     }
 
     useEffect(() => {
-        fetch('online-group-study-serverside-francisms-projects.vercel.app/homeassignmentscount')
+        fetch('https://online-group-study-serverside-francisms-projects.vercel.app/homeassignmentscount')
         .then(res => res.json())
         .then(count => setCount(count))
         .catch(error => console.error(error))
@@ -32,7 +32,7 @@ const Assignment = () => {
 
     
     useEffect(() => {
-            fetch(`online-group-study-serverside-francisms-projects.vercel.app/homeassignments?page=${currentPage}&size=${itemsPerPage}`)
+            fetch(`https://online-group-study-serverside-francisms-projects.vercel.app/homeassignments?page=${currentPage}&size=${itemsPerPage}`)
                 .then(res => res.json())
                 .then(data => setData(data))
                 .catch(error => console.error(error))

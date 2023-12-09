@@ -54,12 +54,12 @@ const AuthProvider = ({children}) => {
             setUser(currentUser);
             setLoading(false);
             if(currentUser){
-                axios.post('online-group-study-serverside-francisms-projects.vercel.app/jwt', loggedUser, {withCredentials: true})
+                axios.post('https://online-group-study-serverside-francisms-projects.vercel.app/jwt', loggedUser, {withCredentials: true})
                     .then(res => {
                         console.log('token response', res.data);
                     })
             } else {
-                axios.post('online-group-study-serverside-francisms-projects.vercel.app/logout', loggedUser, {
+                axios.post('https://online-group-study-serverside-francisms-projects.vercel.app/logout', loggedUser, {
                     withCredentials: true
                 })
                     .then(res => {

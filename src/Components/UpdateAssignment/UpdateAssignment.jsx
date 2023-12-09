@@ -23,7 +23,7 @@ const UpdateAssignment = () => {
         const level = form.level.value;
 
         const newupdateAssignment = {title, email, userMarks, thumbnail, description, marks, date, level}
-        const baseUrl = `online-group-study-serverside-francisms-projects.vercel.app/assignments`;
+        const baseUrl = `https://online-group-study-serverside-francisms-projects.vercel.app/assignments`;
         const url = `${baseUrl}${_id ? '/' + _id : ''}`;
 
         fetch(url, {
