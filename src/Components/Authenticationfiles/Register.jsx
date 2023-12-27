@@ -6,6 +6,7 @@ import Lottieanim from '../AnimationSVG/Lottieanim2'
 import axios from "axios";
 import useAuth from "../Hooks/useAuth.jsx";
 import useAxiosPublic from "../Hooks/useAxiosPublic.jsx";
+import {Helmet} from "react-helmet";
 
 const Register = () => {
 
@@ -54,6 +55,10 @@ const Register = () => {
 
   return (
     <div className={"justify-center flex"}>
+        <Helmet>
+            <title>OGS | Register</title>
+            <meta name="description" content="Helmet application" />
+        </Helmet>
             <Toaster position="top-center"/>
             <div className={"container"}>
                 <div className={"sm:flex grid justify-center items-center lg:gap-32 gap-8 w-full min-h-screen"}>

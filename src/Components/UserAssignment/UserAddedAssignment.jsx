@@ -4,6 +4,7 @@ import useAuth from "../Hooks/useAuth.jsx";
 import {useQuery} from "@tanstack/react-query";
 import useAxiosPublic from "../Hooks/useAxiosPublic.jsx";
 import Swal from "sweetalert2";
+import {Helmet} from "react-helmet";
 
 
 const UserAddedAssignment = () => {
@@ -38,7 +39,7 @@ const UserAddedAssignment = () => {
                                 refetch();
                                 Swal.fire({
                                     title: "Deleted!",
-                                    text: "Your file has been deleted.",
+                                    text: "Assignment deleted.",
                                     icon: "success"
                                 });
                             }
@@ -65,6 +66,10 @@ const UserAddedAssignment = () => {
 
   return (
       <div className="justify-center flex">
+          <Helmet>
+              <title>OGS | My-Assignments</title>
+              <meta name="description" content="Helmet application" />
+          </Helmet>
           <div className="container min-h-screen">
               <motion.div initial={{scale: 0}} animate={{scale: 1}} transition={{type: "spring", stiffness: 400, damping:20, duration: 0.5}} className={"justify-center flex py-24"}>
                     <h1 className={"text-4xl font-bold"}>My-Assignment</h1>
@@ -96,7 +101,6 @@ const UserAddedAssignment = () => {
                                 </div> :
                                 userAssignment.map(A => <DisplayUserAssignment key={A?._id} data={A} handleConfirm={handleConfirm} handleDelete={() => handleDelete(A._id)} />)
                             }
-
                           </tbody>
                       </table>
                   </div>

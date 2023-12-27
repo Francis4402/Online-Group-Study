@@ -5,6 +5,7 @@ import {motion} from "framer-motion";
 import Lottieanim from '../AnimationSVG/Lottieanim2'
 import axios from "axios";
 import useAuth from "../Hooks/useAuth.jsx";
+import {Helmet} from "react-helmet";
 
 const Login = () => {
     const {signInUser, signinwithGoogle} = useAuth();
@@ -39,6 +40,10 @@ const Login = () => {
 
     return (
         <div className={"justify-center flex"}>
+            <Helmet>
+                <title>OGS | Login</title>
+                <meta name="description" content="Helmet application" />
+            </Helmet>
             <Toaster position="top-center"/>
             <div className={"container"}>
                 <div className={"sm:flex grid justify-center items-center lg:gap-32 gap-8 w-full min-h-screen"}>

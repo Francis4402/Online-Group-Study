@@ -1,21 +1,22 @@
 import {Link, useLoaderData} from "react-router-dom";
 import Swal from "sweetalert2";
-import {useContext} from "react";
-import {AuthContext} from "../AuthProvider/AuthProvider.jsx";
 import {motion} from "framer-motion";
+import useAxiosPublic from "../Hooks/useAxiosPublic.jsx";
+import useAuth from "../Hooks/useAuth.jsx";
+import {Helmet} from "react-helmet";
 
 const UpdateAssignment = () => {
 
-    const {user} = useContext(AuthContext)
-
+    const {user} = useAuth();
+    const axiosPublic = useAxiosPublic();
     const AssignmentData = useLoaderData();
     const {_id, title, image, description, marks, date} = AssignmentData;
 
-    const handleUpdateAssignment = async e => {
+    const handleUpdateAssignment = e => {
         e.preventDefault();
         const form = e.target;
         const title = form.title.value;
-        const thumbnail = form.thumbnail.value;
+        const image = form.image.value;
         const description = form.description.value;
         const marks = form.marks.value;
         const email = user?.email;
@@ -23,20 +24,11 @@ const UpdateAssignment = () => {
         const date = form.date.value;
         const level = form.level.value;
 
-        const newupdateAssignment = {title, email, userMarks, thumbnail, description, marks, date, level}
-        const baseUrl = `https://online-group-study-serverside.vercel.app/assignments`;
-        const url = `${baseUrl}${_id ? '/' + _id : ''}`;
+        const newupdateAssignment = {title, email, userMarks, image, description, marks, date, level}
 
-        fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Content-Type' : 'application/json'
-            },
-            body: JSON.stringify(newupdateAssignment)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if(data.modifiedCount > 0){
+        axiosPublic.put(`/assignments/${_id}`, newupdateAssignment)
+            .then(res => {
+                if(res.data.modifiedCount > 0){
                     Swal.fire({
                         title: 'Success!',
                         text: 'Assignment Updated Successfully',
@@ -50,6 +42,10 @@ const UpdateAssignment = () => {
 
     return (
         <div className="hero">
+            <Helmet>
+                <title>OGS | Update</title>
+                <meta name="description" content="Helmet application" />
+            </Helmet>
             <div className="hero-content flex-col min-h-screen">
                 <div className="text-center lg:text-left">
                     <h1 className="text-3xl font-bold">Update Assignment</h1>

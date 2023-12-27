@@ -4,6 +4,7 @@ import {motion} from "framer-motion";
 import useAuth from "../Hooks/useAuth.jsx";
 import useAxiosPublic from "../Hooks/useAxiosPublic.jsx";
 import {useForm} from "react-hook-form";
+import {Helmet} from "react-helmet";
 
 const image_hosting_key = import.meta.env.VITE_Image_Upload_token;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -25,11 +26,10 @@ const AddAssignment = () => {
                 title: data.title,
                 image: res.data.data.display_url,
                 description: data.description,
-                marks: res.data.marks,
                 email: user?.email,
-                userMarks: res.data.userMarks,
-                date: res.data.date,
+                date: data.date,
                 level: data.level,
+                marks: data.marks,
             }
             const addassignment = await axiosPublic.post('/assignments', productsdata)
             if(addassignment.data.insertedId){
@@ -47,6 +47,10 @@ const AddAssignment = () => {
 
     return (
         <div className="hero">
+            <Helmet>
+                <title>OGS | AddAssignment</title>
+                <meta name="description" content="Helmet application" />
+            </Helmet>
             <div className="hero-content flex-col min-h-screen">
                 <motion.div initial={{scale: 0}} animate={{scale: 1}} transition={{type: "spring", stiffness: 400, damping:10, duration: 0.5}} className="text-center lg:text-left">
                     <h1 className="text-3xl font-bold">Add Product</h1>
@@ -91,12 +95,6 @@ const AddAssignment = () => {
                                         <input defaultValue={0} type="number" {...register('marks', {required: true})} placeholder="Marks" className="input input-bordered w-full" required />
                                     </div>
 
-                                    <div className="form-control hidden">
-                                        <label className="label">
-                                            <span className="label-text">Others Review Marks</span>
-                                        </label>
-                                        <input defaultValue={0} type="number" {...register('userMarks', {required: true})} placeholder="userMarks" className="input input-bordered w-full" />
-                                    </div>
 
                                     <div className="form-control">
                                         <label className="label">

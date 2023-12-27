@@ -1,9 +1,26 @@
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import useAxiosPublic from "../Hooks/useAxiosPublic.jsx";
 const DisplayUserAssignment = ({data, handleDelete, handleConfirm}) => {
 
-    const {_id, title, image, marks, date, level, status} = data;
+    const {_id, title, image, date, level, status} = data;
+    const axiosPublic = useAxiosPublic();
+    const {data: mark = []} = useQuery({
+        queryKey: ['marks'],
+        queryFn: async () => {
+            const res = await axiosPublic.get(`/totalmarks`);
+            return res.data;
+        }
+    })
 
+    const { overallPercentage } = mark.reduce(
+        (acc, m) => ({
+            totalUserMarks: acc.totalUserMarks + m.userMarks,
+            overallPercentage: acc.totalUserMarks / mark.length,
+        }),
+        { totalUserMarks: 0, overallPercentage: 0 }
+    );
 
     return (
         <tr>
@@ -34,7 +51,7 @@ const DisplayUserAssignment = ({data, handleDelete, handleConfirm}) => {
                 </div>
             </td>
             <td>{level}</td>
-            <td>{marks}</td>
+            <td>{overallPercentage}%</td>
             <th>
                 <Link to={`/updateassignment/assignments/${_id}`}><button className="btn btn-ghost btn-xs">Update</button></Link>
             </th>

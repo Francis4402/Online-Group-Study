@@ -1,9 +1,14 @@
 import { motion } from "framer-motion"
+import {Helmet} from "react-helmet";
 
 
 const HowItWorks = () => {
   return (
     <div className="justify-center flex">
+        <Helmet>
+            <title>OGS | How It Works</title>
+            <meta name="description" content="Helmet application" />
+        </Helmet>
       <motion.div initial={{opacity: 0, x: -200}} animate={{opacity: 1, x: 0}} transition={{type:"spring", stiffness: 100, damping: 10, duration: 1}} className="container h-[795px] md:px-0 px-5">
           <h1 className={"text-center font-semibold text-5xl py-10"}>How It Work</h1>
           <p className="font-semibold">This website is about online assignment share & review others assignment with your friends.
