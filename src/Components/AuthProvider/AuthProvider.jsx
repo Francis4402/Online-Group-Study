@@ -2,7 +2,7 @@ import app from "../Firebase/firebase.config.js";
 import {GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile} from "firebase/auth"
 import {createContext, useEffect, useState} from "react";
 import PropTypes from 'prop-types'
-import axios from "axios";
+import useAxiosPublic from "../Hooks/useAxiosPublic.jsx";
 
 const auth = getAuth(app)
 
@@ -10,6 +10,7 @@ export const AuthContext = createContext(null);
 const GoogleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({children}) => {
+    const axiosPublic = useAxiosPublic();
     const [user, setUser] = useState(null)
     const [loading, setLoading] = useState(true);
 
@@ -48,30 +49,25 @@ const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
-
-            const userEmail = currentUser?.email || user?.email;
-            const loggedUser = {email: userEmail};
             setUser(currentUser);
-            setLoading(false);
             if(currentUser){
-                axios.post('https://online-group-study-serverside-francisms-projects.vercel.app/jwt', loggedUser, {withCredentials: true})
+                const userInfo = {email: currentUser.email};
+                axiosPublic.post('/jwt', userInfo)
                     .then(res => {
-                        console.log('token response', res.data);
+                        if(res.data.token){
+                            localStorage.setItem('token', res.data.token);
+                            setLoading(false);
+                        }
                     })
             } else {
-                axios.post('https://online-group-study-serverside-francisms-projects.vercel.app/logout', loggedUser, {
-                    withCredentials: true
-                })
-                    .then(res => {
-                        console.log(res.data)
-                    })
+                localStorage.removeItem('token');
+                setLoading(false);
             }
         })
-        
         return () => {
             unSubscribe();
         }
-    }, [user?.email])
+    }, [axiosPublic])
 
     const authInfo = { user, setUser, createUser, signInUser, logOut, loading, signinwithGoogle }
 

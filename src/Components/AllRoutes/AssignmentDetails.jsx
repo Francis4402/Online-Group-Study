@@ -1,5 +1,4 @@
 import { Link, useLoaderData} from "react-router-dom";
-import Swal from "sweetalert2";
 import { useState } from "react";
 
 const AssignmentDetails = () => {
@@ -10,50 +9,7 @@ const AssignmentDetails = () => {
 
 
     const handleUpdateMarks = e => {
-        
-        e.preventDefault();
 
-
-        const form = e.target;
-        const userMarks = form.userMarks.value;
-
-        
-
-        if (userMarks > marks){
-            Swal.fire({
-                title: 'Error!',
-                text: 'New marks cannot exceed the existing marks.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-            return;
-        }
-
-        const updatemarks = {userMarks}
-
-        const baseUrl = `https://online-group-study-serverside-francisms-projects.vercel.app/homeassignments`;
-        const url = `${baseUrl}${_id ? '/' + _id : ''}`;
-
-        fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Content-Type' : 'application/json'
-            },
-            body: JSON.stringify(updatemarks)
-        })
-            .then(res => res.json())
-            .then(data => {
-                if(data.modifiedCount > 0){
-                    setIsSubmitted(true);
-                    Swal.fire({
-                        title: 'Success!',
-                        text: 'Assignment Updated Successfully',
-                        icon: 'success',
-                        confirmButtonText: 'ok'
-                    })
-                }
-            })
-            .catch(error => console.error(error))
     }
 
 

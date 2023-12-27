@@ -1,16 +1,13 @@
-import  { useContext } from 'react'
-import { AuthContext } from '../AuthProvider/AuthProvider';
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import toast, {Toaster} from "react-hot-toast";
 import {AiFillGoogleCircle} from "react-icons/ai";
 import {motion} from "framer-motion";
 import Lottieanim from '../AnimationSVG/Lottieanim2'
 import axios from "axios";
+import useAuth from "../Hooks/useAuth.jsx";
 
 const Login = () => {
-    const {user, signInUser, signinwithGoogle} = useContext(AuthContext)
-    const location = useLocation();
-    const navigate = useNavigate();
+    const {signInUser, signinwithGoogle} = useAuth();
 
     const handlelogin = (e) => {
 
@@ -19,27 +16,13 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            toast.error('Please enter a valid email address.');
-            return;
-        }
-
         signInUser(email, password)
             .then((res) => {
-                const loggedInUser = res.user;
-                console.log(loggedInUser)
-                const user = {email};
-                axios.post('https://online-group-study-serverside-francisms-projects.vercel.app/jwt', user, {withCredentials: true})
-                    .then(res => {
-                        if(res.data.success) {
-                            navigate(location?.state ? location?.state : '/')
-                        }
-                    })
-                toast.success('Login Successful')
+                console.log(res.user)
+                toast.success('Your Logged In')
             })
-            .catch((error) => {
-                console.error(error)
+            .catch(error => {
+                console.log(error)
                 toast.error('Email or password is incorrect')
             })
     }
@@ -47,17 +30,10 @@ const Login = () => {
     const handlegooglesignin = () => {
         signinwithGoogle()
             .then(() => {
-                axios.post('https://online-group-study-serverside-francisms-projects.vercel.app/jwt', user, {withCredentials: true})
-                    .then(res => {
-                        if(res.data.success){
-                            navigate(location?.state ? location?.state : '/')
-                        }
-                    })
-                toast.success('Login Successful')
+                toast.success('Your Logged In')
             })
-            .catch((error) => {
-                console.error(error)
-                toast.error('Check Your Email')
+            .catch(() => {
+                toast.error('Email or password is incorrect')
             })
     }
 

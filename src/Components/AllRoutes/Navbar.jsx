@@ -71,7 +71,7 @@ const Navbar = () => {
                                                 </a>
                                             </li>
                                             
-                                            <Link to="/useraddedassignment">
+                                            <Link to="/myassignments">
                                                 <li>
                                                     <button>
                                                         UserAssignment

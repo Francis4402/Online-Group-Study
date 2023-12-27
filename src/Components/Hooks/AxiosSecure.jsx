@@ -1,34 +1,32 @@
-import {useContext, useEffect} from 'react';
 import axios from "axios";
-import {AuthContext} from "../AuthProvider/AuthProvider.jsx";
 import {useNavigate} from "react-router-dom";
-import toast from "react-hot-toast";
+import useAuth from "./useAuth.jsx";
 
 const axiosSecure = axios.create({
-    baseURL: 'https://online-group-study-serverside-francisms-projects.vercel.app',
+    baseURL: import.meta.env.VITE_API_URL,
     withCredentials: true
 })
 const AxiosSecure = () => {
-    const {logOut} = useContext(AuthContext);
+    const {logOut} = useAuth();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        axiosSecure.interceptors.response.use(res => {
-            return res;
-        }, error => {
-            console.log('error tracked in the interceptor', error.res)
-            if(error.response.status === 401 || error.response.status === 403){
-                console.log('logout the user')
-                logOut()
-                    .then(() => {
-                        toast.success("LogOut Successfull")
-                        navigate('/login')
-                    })
-                    .catch(error => {
-                        console.error(error)
-                    })
-            }
-        })
+    axiosSecure.interceptors.request.use(function (config){
+        const token = localStorage.getItem('token')
+        config.headers.authorization = `Bearer ${token}`;
+        return config;
+    }, function (error){
+        return Promise.reject(error);
+    })
+
+    axiosSecure.interceptors.response.use(function (response){
+        return response;
+    }, async function(error){
+        const status = error.response.status;
+        if(status === 401 || status === 403){
+            await logOut();
+            navigate('/login')
+        }
+        return Promise.reject(error);
     })
 
     return axiosSecure;

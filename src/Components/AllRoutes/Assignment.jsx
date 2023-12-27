@@ -2,13 +2,14 @@ import {useContext, useEffect, useState} from 'react';
 import ACards from "./ACards.jsx";
 import { motion } from 'framer-motion';
 import { AuthContext } from '../AuthProvider/AuthProvider.jsx';
+import useAxiosPublic from "../Hooks/useAxiosPublic.jsx";
 
 
 
 const Assignment = () => {
 
     const {loading} = useContext(AuthContext)
-
+    const axiosPublic = useAxiosPublic();
     const [data, setData] = useState([])
     const [selectedLevel, setSelectedLevel] = useState('all');
     const [sortedData, setSortedData] = useState([]);
@@ -23,20 +24,18 @@ const Assignment = () => {
     }
 
     useEffect(() => {
-        fetch('https://online-group-study-serverside-francisms-projects.vercel.app/homeassignmentscount')
-        .then(res => res.json())
-        .then(count => setCount(count))
+        axiosPublic.get('/homeassignmentscount')
+        .then(res => setCount(res.data.count))
         .catch(error => console.error(error))
-    },[])
+    },[axiosPublic])
     
 
     
     useEffect(() => {
-            fetch(`https://online-group-study-serverside-francisms-projects.vercel.app/homeassignments?page=${currentPage}&size=${itemsPerPage}`)
-                .then(res => res.json())
-                .then(data => setData(data))
+            axiosPublic.get(`/homeassignments?page=${currentPage}&size=${itemsPerPage}`)
+                .then(res => setData(res.data))
                 .catch(error => console.error(error))
-    }, [currentPage, itemsPerPage])
+    }, [currentPage, itemsPerPage, axiosPublic])
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const sortDataByLevel = (level) => {

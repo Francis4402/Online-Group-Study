@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-const DisplayUserAssignment = ({Data, handleDelete, handleBookingConfirm}) => {
+const DisplayUserAssignment = ({data, handleDelete, handleConfirm}) => {
 
-    const {_id, title, thumbnail, marks, date, level, status} = Data;
+    const {_id, title, image, marks, date, level, status} = data;
 
 
     return (
@@ -23,7 +23,7 @@ const DisplayUserAssignment = ({Data, handleDelete, handleBookingConfirm}) => {
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            {thumbnail && <img src={thumbnail}
+                            {image && <img src={image}
                                          alt="Avatar Tailwind CSS Component"/>}
                         </div>
                     </div>
@@ -42,7 +42,7 @@ const DisplayUserAssignment = ({Data, handleDelete, handleBookingConfirm}) => {
                 {
                     status === 'confirm' ?
                         <span className="font-bold btn btn-ghost btn-xs text-primary">Confirmed</span> :
-                        <button onClick={() => handleBookingConfirm(_id)}
+                        <button onClick={() => handleConfirm(_id)}
                                 className="btn btn-ghost btn-xs">Please Confirm</button>
                 }
             </th>
@@ -51,10 +51,10 @@ const DisplayUserAssignment = ({Data, handleDelete, handleBookingConfirm}) => {
 };
 
 DisplayUserAssignment.propTypes = {
-    Data: PropTypes.object,
+    data: PropTypes.object,
     HomeAssignment: PropTypes.object,
     handleDelete: PropTypes.func,
-    handleBookingConfirm: PropTypes.func
+    handleConfirm: PropTypes.func
 }
 
 export default DisplayUserAssignment;

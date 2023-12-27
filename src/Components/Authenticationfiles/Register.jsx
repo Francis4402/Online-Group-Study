@@ -1,17 +1,16 @@
 import { motion } from 'framer-motion';
-import { useContext } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 import {AiFillGoogleCircle} from "react-icons/ai";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Lottieanim from '../AnimationSVG/Lottieanim2'
-import { AuthContext } from '../AuthProvider/AuthProvider';
 import axios from "axios";
+import useAuth from "../Hooks/useAuth.jsx";
+import useAxiosPublic from "../Hooks/useAxiosPublic.jsx";
 
 const Register = () => {
 
-
-  const {user, createUser, signinwithGoogle} = useContext(AuthContext);
-
+    const {createUser, signinwithGoogle} = useAuth();
+    const axiosPublic = useAxiosPublic();
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -26,11 +25,9 @@ const Register = () => {
         console.log(name, email, password)
 
         createUser(name, email, password, photoURL)
-            .then((res) => {
-                const RegisterUser = res.user;
-                console.log(RegisterUser)
+            .then(() => {
                 const user = {name, email};
-                axios.post('https://online-group-study-serverside-francisms-projects.vercel.app/jwt', user, {withCredentials: true})
+                axiosPublic.post('/jwt', user)
                     .then(res => {
                         if(res.data.success){
                             navigate(location?.state ? location?.state : '/')
@@ -42,22 +39,15 @@ const Register = () => {
                 console.error(error)
                 toast.error('Email Already registered')
             })
-            
+
       }
     const handlegooglesignin = () => {
         signinwithGoogle()
             .then(() => {
-                axios.post('https://online-group-study-serverside-francisms-projects.vercel.app/jwt', user, {withCredentials: true})
-                    .then(res => {
-                        if(res.data.success){
-                            navigate(location?.state ? location?.state : '/')
-                        }
-                    })
-                toast.success('Login Successful')
+                toast.success('Your Logged In')
             })
-            .catch((error) => {
-                console.error(error)
-                toast.error('Check Your Email')
+            .catch(() => {
+                toast.error('Email or password is incorrect')
             })
     }
 

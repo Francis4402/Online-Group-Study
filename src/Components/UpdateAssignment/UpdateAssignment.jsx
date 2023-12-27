@@ -9,8 +9,9 @@ const UpdateAssignment = () => {
     const {user} = useContext(AuthContext)
 
     const AssignmentData = useLoaderData();
-    const {_id, title, thumbnail, description, marks, date} = AssignmentData;
-    const handleUpdateAssignment = e => {
+    const {_id, title, image, description, marks, date} = AssignmentData;
+
+    const handleUpdateAssignment = async e => {
         e.preventDefault();
         const form = e.target;
         const title = form.title.value;
@@ -23,7 +24,7 @@ const UpdateAssignment = () => {
         const level = form.level.value;
 
         const newupdateAssignment = {title, email, userMarks, thumbnail, description, marks, date, level}
-        const baseUrl = `https://online-group-study-serverside-francisms-projects.vercel.app/assignments`;
+        const baseUrl = `https://online-group-study-serverside.vercel.app/assignments`;
         const url = `${baseUrl}${_id ? '/' + _id : ''}`;
 
         fetch(url, {
@@ -55,7 +56,7 @@ const UpdateAssignment = () => {
                 </div>
 
                 <motion.div initial={{opacity: 0, x: -50}} whileHover={{scale: 1.1, x: 20}} whileTap={{scale: 0.9, x: -20}} animate={{opacity: 1, x: 0}} transition={{type: "spring", stiffness: 400, damping:15, duration: 0.5}} className="justify-start flex w-full">
-                    <Link to="/"><button className="px-5 py-3 bg-[#6C5F5B] rounded-xl text-white hover:bg-[#6C5F5B]/60 duration-200 font-semibold">Back</button></Link>
+                    <Link to="/myassignments"><button className="px-5 py-3 bg-[#6C5F5B] rounded-xl text-white hover:bg-[#6C5F5B]/60 duration-200 font-semibold">Back</button></Link>
                 </motion.div>
 
 
@@ -69,7 +70,7 @@ const UpdateAssignment = () => {
                                     <label className="label">
                                         <span className="label-text">Thumbnail</span>
                                     </label>
-                                    <input name="thumbnail" defaultValue={thumbnail} type="url" placeholder="Thumbnail" className="input input-bordered w-full" required />
+                                    <input name="image" defaultValue={image} type="url" placeholder="Thumbnail" className="input input-bordered w-full" required />
                                 </div>
                                 <div className="form-control">
                                     <label className="label">
